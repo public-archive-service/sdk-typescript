@@ -31,5 +31,9 @@
   "homepage": "https://github.com/public-archive-service/sdk-typescript#readme",
   "devDependencies": {
     "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "rxjs": "^7.4.0",
+    "symbol-sdk": "^1.0.3"
   }
 }
