@@ -8,6 +8,8 @@
   "types": "./dist/esm/index.ts",
   "scripts": {
     "tsc": "tsc",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
@@ -30,6 +32,13 @@
   },
   "homepage": "https://github.com/public-archive-service/sdk-typescript#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.0",
+    "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   },
   "dependencies": {
