@@ -1,0 +1,25 @@
+{
+  "name": "public-archive-service-sdk",
+  "version": "0.0.1",
+  "description": "Your history, forever. Public Archive Service enables a truly decentralized Social History Service. This is a SDK to support sending transactions and reading data according to the Public Archive Service schema for the Symbol blockchain.",
+  "main": "./cjs/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/public-archive-service/sdk-typescript.git"
+  },
+  "keywords": [
+    "public-archive-service",
+    "blockchain",
+    "symbol",
+    "sdk"
+  ],
+  "author": "Public Archive Service",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/public-archive-service/sdk-typescript/issues"
+  },
+  "homepage": "https://github.com/public-archive-service/sdk-typescript#readme"
+}
