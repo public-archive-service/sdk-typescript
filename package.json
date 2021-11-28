@@ -4,6 +4,7 @@
   "description": "Your history, forever. Public Archive Service enables a truly decentralized Social History Service. This is a SDK to support sending transactions and reading data according to the Public Archive Service schema for the Symbol blockchain.",
   "main": "./cjs/index.js",
   "scripts": {
+    "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
