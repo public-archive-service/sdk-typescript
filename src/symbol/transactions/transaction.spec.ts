@@ -2,6 +2,7 @@ import {
   sendAddressAliasCreateForAddressTransactionWithPrivateKey,
   sendNamespaceRegistrationCreateRootNamespaceTransactionWithPrivateKey,
   sendNamespaceRegistrationCreateSubNamespaceTransactionWithPrivateKey,
+  sendTransferWithPlainMessageTransaction,
 } from ".";
 import { fetchRandomNodeUrl } from "../nodes";
 import { getPrivateKey, Network } from "../utils";
@@ -90,4 +91,22 @@ import { getPrivateKey, Network } from "../utils";
   //   getPrivateKey(network, "PUBLIC_ARCHIVE_SERVICE_ARCHIVER"),
   //   false
   // );
+
+  await sendTransferWithPlainMessageTransaction(
+    nodeUrl,
+    "TBK7XV2NHC466HZ63XC7RPESLNXFEGCSJ3ZZ2FY",
+    0,
+    undefined,
+    getPrivateKey(network, "PUBLIC_ARCHIVE_SERVICE_ARCHIVER"),
+    false
+  );
+
+  await sendTransferWithPlainMessageTransaction(
+    nodeUrl,
+    "TBK7XV2NHC466HZ63XC7RPESLNXFEGCSJ3ZZ2FY",
+    0,
+    "Your history, forever.",
+    getPrivateKey(network, "PUBLIC_ARCHIVE_SERVICE_ARCHIVER"),
+    false
+  );
 })();
