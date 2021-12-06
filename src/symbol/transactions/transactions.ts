@@ -28,6 +28,38 @@ export const fetchTransactionFees = async (
   return transactionFees;
 };
 
+export const buildTransferWithPlainMessageTransaction = async (
+  nodeUrl: string,
+  rawAddress: string,
+  relativeAmount: number,
+  rawMessage: string | undefined
+): Promise<SymbolSdk.Transaction> => {
+  const networkType = await fetchNetworkType(nodeUrl);
+  const epochAdjustment = await fetchEpochAdjustment(nodeUrl);
+  const transactionFees = await fetchTransactionFees(nodeUrl);
+  const currency = (await fetchNetworkCurrencies(nodeUrl)).currency;
+  if (!SymbolSdk.Address.isValidRawAddress(rawAddress)) {
+    throw Error("Invalid address!");
+  }
+  if (relativeAmount < 0 || relativeAmount >= 8000000000) {
+    throw Error("Invalid amount!");
+  }
+  let message: SymbolSdk.Message;
+  if (rawMessage === undefined) {
+    message = SymbolSdk.EmptyMessage;
+  } else {
+    message = SymbolSdk.PlainMessage.create(rawMessage);
+  }
+  const transferTransaction = SymbolSdk.TransferTransaction.create(
+    SymbolSdk.Deadline.create(epochAdjustment),
+    SymbolSdk.Address.createFromRawAddress(rawAddress),
+    [currency.createRelative(relativeAmount)],
+    message,
+    networkType
+  ).setMaxFee(transactionFees.medianFeeMultiplier);
+  return transferTransaction;
+};
+
 export const signTransactionWithPrivateKey = async (
   nodeUrl: string,
   privateKey: string,
@@ -77,6 +109,37 @@ export const announceTransaction = async (
   } finally {
     listener.close();
   }
+};
+
+export const sendTransferWithPlainMessageTransaction = async (
+  nodeUrl: string,
+  rawAddress: string,
+  relativeAmount: number,
+  rawMessage: string | undefined,
+  privateKey: string,
+  isClient: boolean
+): Promise<SymbolSdk.Transaction> => {
+  const unsignedTransaction = await buildTransferWithPlainMessageTransaction(
+    nodeUrl,
+    rawAddress,
+    relativeAmount,
+    rawMessage
+  );
+  console.dir(unsignedTransaction, { depth: null });
+  console.log("fee: %s", unsignedTransaction.maxFee.toString());
+  const signedTransaction = await signTransactionWithPrivateKey(
+    nodeUrl,
+    privateKey,
+    unsignedTransaction
+  );
+  console.dir(signedTransaction, { depth: null });
+  const transaction = await announceTransaction(
+    nodeUrl,
+    signedTransaction,
+    isClient
+  );
+  console.dir(transaction, { depth: null });
+  return transaction;
 };
 
 export const sendNamespaceRegistrationCreateRootNamespaceTransactionWithPrivateKey =
